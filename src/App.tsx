@@ -4,12 +4,10 @@ import { Swap } from "./Swap";
 
 function App() {
   return (
-    <>
-      <div className="card">
-        <SwapDemo />
-        <Swap />
-      </div>
-    </>
+    <div className="card">
+      <SwapDemo />
+      <Swap />
+    </div>
   );
 }
 

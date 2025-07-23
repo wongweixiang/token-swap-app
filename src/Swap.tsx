@@ -1,26 +1,39 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { TokenSelect } from "./TokenSelect";
+import { bigDecimal } from "js-big-decimal"; // using big decimal to avoid floating point math errors
+import { usePriceMultiple } from "./hooks/usePriceMultiple";
 
 export const Swap = () => {
   const { register, watch, setValue } = useForm();
 
-  const buyInputValue = watch("buyInput");
+  const fromInputValue = watch("fromInput");
+
+  const { priceMultiple } = usePriceMultiple();
 
   useEffect(() => {
-    setValue("sellInput", buyInputValue * 2);
-  }, [buyInputValue, setValue]);
+    if (!fromInputValue) {
+      setValue("toInput", null);
+      return;
+    }
+
+    if (priceMultiple)
+      setValue(
+        "toInput",
+        bigDecimal.multiply(String(fromInputValue), priceMultiple)
+      );
+  }, [fromInputValue, setValue, priceMultiple]);
 
   return (
     <form>
       <div className="flex flex-col w-full gap-4 my-10">
-        <div className="rounded-md bg-gray-400 p-4 flex gap-2">
+        <div className="rounded-md bg-gray-200 p-4 flex gap-2">
           <TokenSelect direction="from" />
-          <input {...register("buyInput")} type="number" />
+          <input {...register("fromInput")} type="number" />
         </div>
-        <div className="rounded-md bg-gray-400 p-4 flex gap-2">
+        <div className="rounded-md bg-gray-200 p-4 flex gap-2">
           <TokenSelect direction="to" />
-          <input {...register("sellInput")} type="number" disabled />
+          <input {...register("toInput")} type="number" disabled />
         </div>
       </div>
     </form>

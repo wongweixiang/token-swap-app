@@ -3,20 +3,27 @@ import {
   getAssetErc20ByChainAndSymbol,
   getAssetPriceInfo,
 } from "@funkit/api-base";
+import { TOKEN_MAPPING } from "./TokenSelect";
 
 const DEV_API_KEY = "Z9SZaOwpmE40KX61mUKWm5hrpGh7WHVkaTvQJpQk";
 
+type GetTokenData = {
+  symbol: string;
+};
+
 export const SwapDemo = () => {
-  const getTokenData = async () => {
+  const getTokenData = async ({ symbol }: GetTokenData) => {
+    const chainId = TOKEN_MAPPING[symbol];
+
     const tokenInfo = await getAssetErc20ByChainAndSymbol({
-      chainId: "1",
-      symbol: "USDC",
+      chainId,
+      symbol,
       apiKey: DEV_API_KEY,
     });
 
     const price = await getAssetPriceInfo({
-      chainId: "1",
-      assetTokenAddress: "0x514910771af9ca656af840dff83e8264ecf986ca",
+      chainId,
+      assetTokenAddress: tokenInfo?.address,
       apiKey: DEV_API_KEY,
     });
 
@@ -24,7 +31,9 @@ export const SwapDemo = () => {
   };
 
   useEffect(() => {
-    getTokenData();
+    getTokenData({
+      symbol: "ETH",
+    });
   }, []);
 
   return <div>Swap component</div>;
