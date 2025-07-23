@@ -9,7 +9,7 @@ export const Swap = () => {
 
   const fromInputValue = watch("fromInput");
 
-  const { priceMultiple } = usePriceMultiple();
+  const { priceMultiple, isLoading } = usePriceMultiple();
 
   useEffect(() => {
     if (!fromInputValue) {
@@ -31,9 +31,13 @@ export const Swap = () => {
           <TokenSelect direction="from" />
           <input {...register("fromInput")} type="number" />
         </div>
-        <div className="rounded-md bg-gray-200 p-4 flex gap-2">
+        <div className="rounded-md bg-gray-200 p-4 flex items-center gap-2">
           <TokenSelect direction="to" />
-          <input {...register("toInput")} type="number" disabled />
+          {fromInputValue && isLoading ? (
+            <span>Loading...</span>
+          ) : (
+            <input {...register("toInput")} type="number" disabled />
+          )}
         </div>
       </div>
     </form>
