@@ -1,8 +1,8 @@
+import { useEffect } from "react";
 import {
   getAssetErc20ByChainAndSymbol,
   getAssetPriceInfo,
 } from "@funkit/api-base";
-import { useEffect } from "react";
 
 const DEV_API_KEY = "Z9SZaOwpmE40KX61mUKWm5hrpGh7WHVkaTvQJpQk";
 

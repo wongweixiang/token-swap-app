@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import {
   Select,
   SelectContent,
@@ -8,20 +9,43 @@ import {
   SelectValue,
 } from "./components/ui/select";
 
-export const TokenSelect = () => {
+const TOKEN_LIST = [
+  {
+    chainId: "1",
+    symbol: "USDC",
+  },
+  {
+    chainId: "137",
+    symbol: "USDT",
+  },
+  {
+    chainId: "8453",
+    symbol: "ETH",
+  },
+  {
+    chainId: "1",
+    symbol: "WBTC",
+  },
+];
+
+type TokenSelectProps = {
+  direction: "from" | "to";
+};
+
+export const TokenSelect: FC<TokenSelectProps> = ({ direction }) => {
+  console.log(direction);
+
   return (
-    <Select>
+    <Select onValueChange={(e) => alert(e)}>
       <SelectTrigger className="w-36">
         <SelectValue placeholder="Select token" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Tokens</SelectLabel>
-          <SelectItem value="apple">Apple</SelectItem>
-          <SelectItem value="banana">Banana</SelectItem>
-          <SelectItem value="blueberry">Blueberry</SelectItem>
-          <SelectItem value="grapes">Grapes</SelectItem>
-          <SelectItem value="pineapple">Pineapple</SelectItem>
+          {TOKEN_LIST.map((token) => (
+            <SelectItem value={token.symbol}>{token.symbol}</SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>
