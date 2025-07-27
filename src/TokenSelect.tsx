@@ -47,7 +47,9 @@ export const TokenSelect: FC<TokenSelectProps> = ({ direction }) => {
         <SelectGroup>
           <SelectLabel>Tokens</SelectLabel>
           {filteredSymbols.map((symbol) => (
-            <SelectItem value={symbol}>{symbol}</SelectItem>
+            <SelectItem key={symbol} value={symbol}>
+              {symbol}
+            </SelectItem>
           ))}
         </SelectGroup>
       </SelectContent>

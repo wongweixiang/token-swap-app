@@ -6,7 +6,7 @@ import { bigDecimal } from "js-big-decimal"; // using big decimal to avoid float
 export const usePriceMultiple = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [priceMultiple, setPriceMultiple] = useState("1");
+  const [priceMultiple, setPriceMultiple] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const fromSymbol = searchParams.get("from");
