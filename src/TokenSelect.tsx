@@ -15,6 +15,10 @@ export const TOKEN_MAPPING = {
   USDT: "137",
   ETH: "8453",
   WBTC: "1",
+  LINK: "1",
+  POL: "137",
+  ARB: "42161",
+  OP: "10",
 };
 
 type TokenSelectProps = {
