@@ -1,5 +1,4 @@
 import type { FC } from "react";
-import { useSearchParams } from "react-router";
 import {
   Select,
   SelectContent,
@@ -9,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./components/ui/select";
+import { useSelectedTokens, type Token } from "./SelectedTokensContext";
 
 export const TOKEN_MAPPING = {
   USDC: "1",
@@ -19,26 +19,30 @@ export const TOKEN_MAPPING = {
 
 type TokenSelectProps = {
   direction: "from" | "to";
+  token: Token | undefined;
 };
 
-export const TokenSelect: FC<TokenSelectProps> = ({ direction }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const fromSymbol = searchParams.get("from");
-  const toSymbol = searchParams.get("to");
+export const TokenSelect: FC<TokenSelectProps> = ({ direction, token }) => {
+  const { fromToken, toToken, setSelectedTokens } = useSelectedTokens();
 
   const filteredSymbols = Object.keys(TOKEN_MAPPING).filter((sym) => {
-    return direction === "from" ? sym !== toSymbol : sym !== fromSymbol;
-  }); // prevent same symbol from showing up on both sides of swap
+    return direction === "from"
+      ? sym !== toToken?.symbol
+      : sym !== fromToken?.symbol;
+  }); // prevent the same symbol from showing up on both sides of swap
 
   return (
     <Select
-      onValueChange={(e) =>
-        setSearchParams((params) => {
-          params.set(direction, e);
-          return params;
-        })
-      }
+      value={token?.symbol || ""}
+      onValueChange={(e) => {
+        if (!e) return;
+
+        setSelectedTokens(
+          direction === "from"
+            ? { fromToken: { symbol: e, chainId: TOKEN_MAPPING[e] } }
+            : { toToken: { symbol: e, chainId: TOKEN_MAPPING[e] } }
+        );
+      }}
     >
       <SelectTrigger className="w-36">
         <SelectValue placeholder="Select token" />

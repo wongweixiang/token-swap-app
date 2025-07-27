@@ -4,9 +4,12 @@ import { TokenSelect } from "./TokenSelect";
 import { bigDecimal } from "js-big-decimal"; // using big decimal to avoid floating point math errors
 import { usePriceMultiple } from "./hooks/usePriceMultiple";
 import swapVertical from "./assets/swap-vertical.svg";
+import { useSelectedTokens } from "./SelectedTokensContext";
 
 export const Swap = () => {
-  const { register, watch, setValue } = useForm();
+  const { register, watch, setValue, getValues } = useForm();
+
+  const { fromToken, toToken, setSelectedTokens } = useSelectedTokens();
 
   const fromInputValue = watch("fromInput");
 
@@ -28,7 +31,7 @@ export const Swap = () => {
   return (
     <form>
       <div className="flex flex-col items-center w-full gap-2 my-10">
-        <div className="rounded-md bg-gray-200 p-4 flex flex-col items-start">
+        <div className="rounded-md bg-gray-200 p-4 flex flex-col items-start w-full">
           <span>Sell</span>
           <div className="flex justify-between gap-2 w-full text-2xl">
             <input
@@ -36,13 +39,21 @@ export const Swap = () => {
               {...register("fromInput")}
               type="number"
             />
-            <TokenSelect direction="from" />
+            <TokenSelect direction="from" token={fromToken} />
           </div>
         </div>
-        <button className="bg-emerald-200 p-2 rounded-4xl cursor-pointer">
+        <button
+          type="button"
+          className="bg-emerald-200 p-2 rounded-4xl cursor-pointer"
+          onClick={() => {
+            const toInputValue = getValues("toInput");
+            setValue("fromInput", toInputValue);
+            setSelectedTokens({ fromToken: toToken, toToken: fromToken });
+          }}
+        >
           <img src={swapVertical} alt="Swap Icon" className="w-6 h-6" />
         </button>
-        <div className="rounded-md bg-gray-200 p-4 flex flex-col items-start">
+        <div className="rounded-md bg-gray-200 p-4 flex flex-col items-start w-full">
           <span>Buy</span>
           <div className="flex justify-between gap-2 w-full text-2xl">
             {fromInputValue && isLoading ? (
@@ -55,7 +66,7 @@ export const Swap = () => {
                 disabled
               />
             )}
-            <TokenSelect direction="to" />
+            <TokenSelect direction="to" token={toToken} />
           </div>
         </div>
       </div>
