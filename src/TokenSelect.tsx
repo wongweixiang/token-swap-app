@@ -33,7 +33,7 @@ export const TokenSelect: FC<TokenSelectProps> = ({ direction, token }) => {
 
   return (
     <Select
-      value={token?.symbol || ""}
+      value={token?.symbol}
       onValueChange={(e) => {
         if (!e) return;
 

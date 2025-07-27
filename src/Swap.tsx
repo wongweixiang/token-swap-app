@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useSelectedTokens } from "./SelectedTokensContext";
 import { TokenSelect } from "./TokenSelect";
 import { bigDecimal } from "js-big-decimal"; // using big decimal to avoid floating point math errors
 import { usePriceMultiple } from "./hooks/usePriceMultiple";
-import swapVertical from "./assets/swap-vertical.svg";
-import { useSelectedTokens } from "./SelectedTokensContext";
+import { ReverseButton } from "./ReverseButton";
 
 export const Swap = () => {
   const { register, watch, setValue, getValues } = useForm();
@@ -35,24 +35,20 @@ export const Swap = () => {
           <span>Sell</span>
           <div className="flex justify-between gap-2 w-full text-2xl">
             <input
-              className="border-b-2 border-black"
+              className="w-8 border-b-2 border-black grow"
               {...register("fromInput")}
               type="number"
             />
             <TokenSelect direction="from" token={fromToken} />
           </div>
         </div>
-        <button
-          type="button"
-          className="bg-emerald-200 p-2 rounded-4xl cursor-pointer"
+        <ReverseButton
           onClick={() => {
             const toInputValue = getValues("toInput");
             setValue("fromInput", toInputValue);
             setSelectedTokens({ fromToken: toToken, toToken: fromToken });
           }}
-        >
-          <img src={swapVertical} alt="Swap Icon" className="w-6 h-6" />
-        </button>
+        />
         <div className="rounded-md bg-gray-200 p-4 flex flex-col items-start w-full">
           <span>Buy</span>
           <div className="flex justify-between gap-2 w-full text-2xl">
@@ -60,7 +56,7 @@ export const Swap = () => {
               <span>Loading...</span>
             ) : (
               <input
-                className="border-b-2 border-black"
+                className="w-8 border-b-2 border-black grow"
                 {...register("toInput")}
                 type="number"
                 disabled
