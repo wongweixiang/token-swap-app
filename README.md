@@ -6,6 +6,14 @@
 - To run locally, npm install and then npm run dev
 - To build, npm run build
 
+**Notes about Implementation**
+
+- A total of 8 tokens are supported for swapping
+- User is not allowed to select the same token on both sides of the trade
+- Button in the centre allows user to reverse the trade direction, if tokens have been selected
+
+- React context is used to store selected tokens
+
 **Libraries Used**
 
 - react-hook-form for simple form lifecycle methods
