@@ -9,7 +9,7 @@ export const Instructions = () => {
       </p>
       <p>
         You may use the button in the centre to reverse the direction of your
-        trade
+        trade (if you have selected a token on both sides)
       </p>
     </div>
   );
