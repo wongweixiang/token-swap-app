@@ -4,12 +4,19 @@ import type { FC } from "react";
 type PriceDisplayProps = {
   price: string | undefined;
   amount: string;
+  isLoading: boolean;
 };
 
-export const PriceDisplay: FC<PriceDisplayProps> = ({ amount, price }) => {
+export const PriceDisplay: FC<PriceDisplayProps> = ({
+  amount,
+  price,
+  isLoading,
+}) => {
   return (
     <span className="mt-2">
-      {bigDecimal.round(bigDecimal.multiply(price, amount), 2)}
+      {isLoading
+        ? "... "
+        : bigDecimal.round(bigDecimal.multiply(price, amount), 2)}
       USD
     </span>
   );

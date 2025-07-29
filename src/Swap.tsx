@@ -55,7 +55,11 @@ export const Swap = () => {
             />
             <TokenSelect direction="from" token={fromToken} />
           </div>
-          <PriceDisplay price={fromTokenPrice} amount={fromInputValue} />
+          <PriceDisplay
+            price={fromTokenPrice}
+            amount={fromInputValue}
+            isLoading={isLoading}
+          />
           {errors.fromInput && (
             <p className="text-red-500 text-sm">
               {String(errors.fromInput.message)}
@@ -82,6 +86,7 @@ export const Swap = () => {
           <PriceDisplay
             price={toTokenPrice}
             amount={errors.fromInput ? 0 : toInputValue}
+            isLoading={isLoading}
           />
         </div>
       </div>
