@@ -5,11 +5,14 @@ export const Instructions = () => {
       <p>Select a token that you wish to sell, and specify an amount</p>
       <p>Then select a token that you wish to buy</p>
       <p>
-        You are not allowed to select the same token on both sides of the trade
-      </p>
-      <p>
         You may use the button in the centre to reverse the direction of your
         trade (if you have selected a token on both sides)
+      </p>
+
+      <p className="italic">Caveats:</p>
+      <p>You are only allowed to specify sell amount, not buy amount</p>
+      <p>
+        You are not allowed to select the same token on both sides of the trade
       </p>
     </div>
   );

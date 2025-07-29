@@ -9,6 +9,8 @@
 **Notes about Implementation**
 
 - A total of 8 tokens are supported for swapping
+- User may only specify _sell_ side amount, not _buy_ side amount
+
 - User is not allowed to select the same token on both sides of the trade
 - Button in the centre allows user to reverse the trade direction, if tokens have been selected
 
