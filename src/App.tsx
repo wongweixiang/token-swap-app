@@ -1,13 +1,15 @@
 import "./App.css";
 import { Instructions } from "./Instructions";
-import { Swap } from "./Swap";
+import { SwapForm } from "./SwapForm";
+import { Toaster } from "@/components/ui/sonner";
 
 function App() {
   return (
     <div className="card">
       <span className="text-3xl font-bold">Swap Tokens</span>
-      <Swap />
+      <SwapForm />
       <Instructions />
+      <Toaster />
     </div>
   );
 }
