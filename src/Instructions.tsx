@@ -1,6 +1,6 @@
 export const Instructions = () => {
   return (
-    <div className="flex flex-col gap-2 items-start bg-emerald-50 p-4 rounded-2xl">
+    <div className="flex flex-col gap-2 items-start bg-emerald-50 p-4 rounded-2xl text-left">
       <span className="text-lg font-semibold">Brief Overview</span>
       <p>Select a token that you wish to sell, and specify an amount</p>
       <p>Then select a token that you wish to buy</p>

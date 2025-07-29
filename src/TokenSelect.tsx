@@ -37,7 +37,7 @@ export const TokenSelect: FC<TokenSelectProps> = ({ direction, token }) => {
 
   return (
     <Select
-      value={token?.symbol}
+      value={token?.symbol ?? ""}
       onValueChange={(e: keyof typeof TOKEN_MAPPING) => {
         if (!e) return;
 

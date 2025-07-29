@@ -1,7 +1,8 @@
-# React + TypeScript + Vite
+# Token Swap Demo App
 
 **Overview**
 
+- Written in React + Typescript + Vite
 - Production deployment available at: https://token-swap-app-five.vercel.app/
 - To run locally, `npm install` and then `npm run dev`
 - To build, `npm run build`

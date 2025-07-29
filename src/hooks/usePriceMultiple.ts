@@ -6,27 +6,52 @@ import { bigDecimal } from "js-big-decimal"; // using big decimal to avoid float
 export const usePriceMultiple = () => {
   const { fromToken, toToken } = useSelectedTokens();
 
-  const [priceMultiple, setPriceMultiple] = useState<string | undefined>(
+  const [fromTokenPrice, setFromTokenPrice] = useState<string | undefined>(
     undefined
   );
-  const [isLoading, setIsLoading] = useState(false);
+  const [isFromPriceLoading, setIsFromPriceLoading] = useState(false);
+
+  const [toTokenPrice, setToTokenPrice] = useState<string | undefined>(
+    undefined
+  );
+  const [isToPriceLoading, setIsToPriceLoading] = useState(false);
 
   useEffect(() => {
-    const getPriceMultiple = async () => {
-      if (!fromToken?.symbol || !toToken?.symbol) return;
+    const getFromPrice = async () => {
+      if (!fromToken) return;
 
-      setIsLoading(true);
+      setIsFromPriceLoading(true);
 
       const fromPrice = await getTokenPrice({ symbol: fromToken?.symbol });
 
-      const toPrice = await getTokenPrice({ symbol: toToken?.symbol });
-
-      setPriceMultiple(bigDecimal.divide(fromPrice, toPrice));
-      setIsLoading(false);
+      setFromTokenPrice(fromPrice);
+      setIsFromPriceLoading(false);
     };
 
-    getPriceMultiple();
-  }, [fromToken, toToken]);
+    getFromPrice();
+  }, [fromToken]);
 
-  return { priceMultiple, isLoading };
+  useEffect(() => {
+    const getToPrice = async () => {
+      if (!toToken) return;
+
+      setIsToPriceLoading(true);
+
+      const toPrice = await getTokenPrice({ symbol: toToken?.symbol });
+
+      setToTokenPrice(toPrice);
+      setIsToPriceLoading(false);
+    };
+
+    getToPrice();
+  }, [toToken]);
+
+  const priceMultiple =
+    fromTokenPrice &&
+    toTokenPrice &&
+    bigDecimal.divide(fromTokenPrice, toTokenPrice);
+
+  const isLoading = isFromPriceLoading || isToPriceLoading;
+
+  return { priceMultiple, fromTokenPrice, toTokenPrice, isLoading };
 };

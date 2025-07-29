@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { useSelectedTokens } from "./SelectedTokensContext";
+import { useSelectedTokens } from "../SelectedTokensContext";
 import { cn } from "@/lib/utils";
-import swapVertical from "./assets/swap-vertical.svg";
+import swapVertical from "@/assets/swap-vertical.svg";
 
 type ReverseButtonProps = {
   onClick: () => void;
