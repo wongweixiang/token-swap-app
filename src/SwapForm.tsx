@@ -103,7 +103,7 @@ export const SwapForm = () => {
           </div>
           <PriceDisplay
             price={toTokenPrice}
-            amount={errors.fromInput ? 0 : toInputValue}
+            amount={errors.fromInput ? "0" : toInputValue}
             isLoading={isLoading}
           />
         </div>
