@@ -48,7 +48,7 @@ export const TokenSelect: FC<TokenSelectProps> = ({ direction, token }) => {
         );
       }}
     >
-      <SelectTrigger className="w-36">
+      <SelectTrigger className="w-24 md:w-36">
         <SelectValue placeholder="Select token" />
       </SelectTrigger>
       <SelectContent>
