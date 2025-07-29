@@ -11,6 +11,7 @@ import { usePriceMultiple } from "./hooks/usePriceMultiple";
 import { ReverseButton } from "./components/ReverseButton";
 import { PriceDisplay } from "./components/PriceDisplay";
 import { CustomInput } from "./components/CustomInput";
+import { Skeleton } from "./components/ui/skeleton";
 
 type FormValues = {
   fromInput: string;
@@ -95,7 +96,7 @@ export const SwapForm = () => {
           <span>Buy</span>
           <div className="flex justify-between gap-2 w-full text-2xl">
             {isLoading && toToken && fromToken ? (
-              <span>Loading...</span>
+              <Skeleton className="w-16 grow" />
             ) : (
               <CustomInput {...register("toInput")} disabled />
             )}
