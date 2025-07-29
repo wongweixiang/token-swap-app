@@ -7,7 +7,7 @@ import { TOKEN_MAPPING } from "@/TokenSelect";
 const DEV_API_KEY = "Z9SZaOwpmE40KX61mUKWm5hrpGh7WHVkaTvQJpQk";
 
 type GetTokenData = {
-  symbol: string;
+  symbol: keyof typeof TOKEN_MAPPING;
 };
 
 export const getTokenPrice = async ({
