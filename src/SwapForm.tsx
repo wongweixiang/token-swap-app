@@ -1,63 +1,29 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-
-import { bigDecimal } from "js-big-decimal"; // using big decimal to avoid floating point math errors
 import { Button } from "./components/ui/button";
-import { toast } from "sonner";
 
 import { useSelectedTokens } from "./SelectedTokensContext";
 import { TokenSelect } from "./TokenSelect";
 import { usePriceMultiple } from "./hooks/usePriceMultiple";
+import { useSwapForm } from "./hooks/useSwapForm";
+
 import { ReverseButton } from "./components/ReverseButton";
 import { PriceDisplay } from "./components/PriceDisplay";
 import { CustomInput } from "./components/CustomInput";
 import { Skeleton } from "./components/ui/skeleton";
 
-type FormValues = {
-  fromInput: string;
-  toInput: string;
-};
-
 export const SwapForm = () => {
+  const { fromToken, toToken } = useSelectedTokens();
+
+  const { fromTokenPrice, toTokenPrice, isLoading } = usePriceMultiple();
+
   const {
     register,
-    watch,
-    setValue,
-    getValues,
+    fromInputValue,
+    toInputValue,
+    onSubmit,
+    errors,
     handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<FormValues>({
-    mode: "onChange",
-  });
-
-  const { fromToken, toToken, setSelectedTokens } = useSelectedTokens();
-
-  const fromInputValue = watch("fromInput");
-  const toInputValue = watch("toInput");
-
-  const { priceMultiple, fromTokenPrice, toTokenPrice, isLoading } =
-    usePriceMultiple();
-
-  useEffect(() => {
-    if (!fromInputValue) {
-      setValue("toInput", "");
-      return;
-    }
-
-    if (priceMultiple)
-      setValue(
-        "toInput",
-        bigDecimal.multiply(String(fromInputValue), priceMultiple)
-      );
-  }, [fromInputValue, setValue, priceMultiple]);
-
-  const onSubmit = (data: FormValues) => {
-    const toastMessage = `Successfully swapped ${data?.fromInput} ${fromToken?.symbol} for ${data?.toInput} ${toToken?.symbol}`;
-
-    toast(toastMessage);
-    reset();
-  };
+    handleReverseTradeDirection,
+  } = useSwapForm();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -85,13 +51,7 @@ export const SwapForm = () => {
             </p>
           )}
         </div>
-        <ReverseButton
-          onClick={() => {
-            const toInputValue = getValues("toInput");
-            setValue("fromInput", toInputValue);
-            setSelectedTokens({ fromToken: toToken, toToken: fromToken });
-          }}
-        />
+        <ReverseButton onClick={handleReverseTradeDirection} />
         <div className="rounded-md bg-gray-200 p-4 flex flex-col items-start w-full">
           <span>Buy</span>
           <div className="flex justify-between gap-2 w-full text-2xl">
