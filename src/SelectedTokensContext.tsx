@@ -3,8 +3,6 @@ import { createContext, useContext, useState, type ReactNode } from "react";
 export type Token = {
   chainId: string;
   symbol: string;
-  name: string;
-  icon: string;
 };
 
 type SelectedTokensContextType = {
