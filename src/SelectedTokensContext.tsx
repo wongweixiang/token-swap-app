@@ -1,9 +1,10 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
-import type { TOKEN_MAPPING } from "./TokenSelect";
 
 export type Token = {
   chainId: string;
-  symbol: keyof typeof TOKEN_MAPPING;
+  symbol: string;
+  name: string;
+  icon: string;
 };
 
 type SelectedTokensContextType = {

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { getTokenPrice } from "@/services/getTokenPrice";
-import type { TOKEN_MAPPING } from "@/TokenSelect";
 
-export const useTokenPrice = (tokenSymbol?: keyof typeof TOKEN_MAPPING) => {
+export const useTokenPrice = (tokenSymbol?: string) => {
   const [price, setPrice] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
